@@ -1,101 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Do List Web Application</title>
-  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-</head>
-<body class="bg-gray-100 text-gray-900">
+// Dark Mode Toggle
+const darkToggle = document.getElementById("darkToggle");
+darkToggle.addEventListener("click", () => {
+  document.body.classList.toggle("dark");
+  darkToggle.textContent = document.body.classList.contains("dark") ? "☀ Light" : "🌙 Dark";
+});
 
-  {/* <!-- Header --> */}
-  <header class="flex justify-between items-center p-4 bg-green-50 text-white">
-    <h1 class="font-bold text-2xl">AgriGO</h1>
-    <ul class="flex space-x-4">
-      <li><a href="#Home" class="hover:underline">Home</a></li>
-      <li><a href="#types-of-wheat" class="hover:underline">Types of Wheat</a></li>
-      <li><a href="#customers" class="hover:ununder line">customers</a></li>
-    </ul>
-  </header>
+// Harvest Declaration Form
+const harvestForm = document.querySelector('form[action="haverst decration"]');
+harvestForm.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-  {/* <!-- Home Section --> */}
-  <section id="Home" class="p-6 text-center">
-    <h2 class="text-xl font-bold mb-4">Welcome to Wheat Harvest Tracking</h2>
-    <p class="text-lg">
-      This system helps to record and track harvested wheat across provinces.
-      Farmers and customers can easily know where the quantity of wheat is located.
-    </p>
-  </section>
+  const name = document.getElementById("name").value;
+  const quantity = document.getElementById("quantity").value;
+  const province = document.getElementById("province").value;
 
-  {/* <!-- Types of Wheat --> */}
-  <section id="types-of-wheat" class="p-6 bg-green-50">
-    <h3 class="text-lg font-bold mb-4">Types of Harvested Wheat</h3>
-    <nav>
-      <ul class="grid grid-cols-2 gap-4">
-        <li><a href="#" class="text-blue-600 hover:underline">Hard Red Winter</a></li>
-        <li><a href="#" class="text-blue-600 hover:underline">Hard Red Spring</a></li>
-        <li><a href="#" class="text-blue-600 hover:underline">Soft Red Winter</a></li>
-        <li><a href="#" class="text-blue-600 hover:underline">Soft White</a></li>
-        <li><a href="#" class="text-blue-600 hover:underline">Hard White</a></li>
-        <li><a href="#" class="text-blue-600 hover:underline">durum</a></li>
-      </ul>
-    </nav>
-  </section>
+  if (!name || !quantity) {
+    alert("Please enter your name and quantity.");
+    return;
+  }
 
-  {/* <!-- Harvest Declaration Form --> */}
-  <section class="p-6">
-    <h3 class="text-lg font-bold mb-4">Harvest Declaration</h3>
-    <form action="#" class="space-y-4 bg-white p-6 rounded shadow-md">
-      
-      {/* <!-- Name --> */}
-      <div>
-        <label for="name" class="block font-semibold mb-1">Name</label>
-        <input type="text" id="name" placeholder="Enter your name" class="w-full p-2 border rounded"></input>
-      </div>
+  alert(`Harvest submitted:\nFarmer: ${name}\nQuantity: ${quantity}\nProvince: ${province}`);
+  harvestForm.reset();
+});
 
-      {/* <!-- Quantity --> */}
-      <div>
-        <label for="quantity" class="block font-semibold mb-1">Quantity (kg or ton)</label>
-        <input type="number" id="quantity" placeholder="Enter quantity" class="w-full p-2 border rounded"></input>
-        <label for="types-of-wheat" class="block font font-semibold mb-1">types 0f wheat</label>
-        <input type="text" id="types-of-wheat" placeholder="enter the types of wheat" class="w-full p-2 border rounded">
-        </input>
-      </div>
+// Add type of wheat button
+const addWheatButton = document.querySelector('button[type="add type of wheat"]');
+addWheatButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  const wheatType = prompt("Enter type of wheat:");
+  if (wheatType) {
+    const select = document.getElementById("province"); // Example: add to province? adjust as needed
+    const option = document.createElement("option");
+    option.textContent = wheatType;
+    select.appendChild(option);
+    alert(`${wheatType} added!`);
+  }
+});
 
-      {/* <!-- Province --> */}
-      <div>
-        <label for="province" class="block font-semibold mb-1">Province</label>
-        <select id="province" class="w-full p-2 border rounded">
-          <option value="northern">Northern</option>
-          <option value="southern">Southern</option>
-          <option value="western">Western</option>
-          <option value="eastern">Eastern</option>
-        </select>
-      </div>
+// Customer Form
+const customerForm = document.querySelector('form[action="choose types of wheate"]');
+customerForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const customerName = customerForm.querySelector('input[id="name"]').value;
+  const wheatType = customerForm.querySelector('select[id="types-of-wheat"]').value;
 
-      {/* <!-- Submit --> */}
-      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
-        Submit
-      </button>
-    </form>
-  </section>
-  <section id="customers" class="">
-    <form action="choose types of wheate">
-    <h3 class="text-lg font-bold mb-4"> Customer choose types of wheat</h3>
-    <div>
-    <label for="name" class=" block font-semibold mb-2"> name</label>
-    <input type="text" id="name" placeholder="enter customer name" class="w-full p-2 border rounded"></input>
-    <label for="types-of-wheat" class="block font-semibold  mb-1"> types-of-wheat</label>
-    <select value="types-of-wheat" >types-of-wheat</select>
-    <option value="Hard Red Winter">Hard Red Winter</option>
-     <option value="Soft Red Winter">Soft Red Winter</option>
-     <option value="Hard White">Hard White</option>
-     <option value="Hard White">Hard White</option>
-     <option value="durum">durum</option>
-     </div>
-     <button type="submit" class=" bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"> submit</button>
-     </form>
-  </section>
-</body>
-</html> 
-</body>
+  if (!customerName) {
+    alert("Please enter customer name.");
+    return;
+  }
+
+  alert(`Customer: ${customerName}\nSelected Wheat: ${wheatType}`);
+});
+
+// Delete customer selection button
+const deleteButton = customerForm.querySelector('button[type="delete"]');
+deleteButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  customerForm.querySelector('input[id="name"]').value = "";
+  customerForm.querySelector('select[id="types-of-wheat"]').selectedIndex = 0;
+  alert("Customer selection deleted!");
+});
